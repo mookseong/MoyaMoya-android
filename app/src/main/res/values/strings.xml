@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">모아모아</string>
+    <string name="searche">검색하실 책 제목을 입력해주세요</string>
+    <string name="newBooks">신작 도서</string>
+    <string name="bookrental">최근 대출된 도서</string>
+    <string name="notice">공지 사항</string>
+    <string name="bookinformation">도서 정보</string>
+    <string name="possessioninformation">소장 정보</string>
+    <string name="number">등록 번호 : </string>
+    <string name="callnumber">청구 기호 : </string>
+    <string name="possessionbook">소장처 : </string>
+    <string name="searchtext">검색 정보</string>
+</resources>
