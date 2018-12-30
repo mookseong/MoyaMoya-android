@@ -9,7 +9,7 @@ import com.kbu.lib.R
 import com.kbu.lib.data.Mainbook
 import kotlinx.android.synthetic.main.books_cardview.view.*
 
-class ViewHolder(viewid : View) : RecyclerView.ViewHolder(viewid){
+class ViewHolder(view : View) : RecyclerView.ViewHolder(view){
     fun bindItem(data: Mainbook) {
         Glide.with(itemView.context).load(data.Img).into(itemView.bookimg)
     }
