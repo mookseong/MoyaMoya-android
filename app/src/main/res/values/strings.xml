@@ -10,4 +10,5 @@
     <string name="callnumber">청구 기호 : </string>
     <string name="possessionbook">소장처 : </string>
     <string name="searchtext">검색 정보</string>
+    <string name="TEST_TEXT">N/A</string>
 </resources>
