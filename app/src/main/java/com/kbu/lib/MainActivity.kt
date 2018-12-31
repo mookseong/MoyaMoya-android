@@ -7,7 +7,9 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.kbu.lib.Base.BaseActivity
 import com.kbu.lib.Recycler.MainBooks
+import com.kbu.lib.Recycler.MainNotice_Recycler
 import com.kbu.lib.data.Mainbook
+import com.kbu.lib.data.Mainnotice
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import org.jsoup.Jsoup
@@ -30,28 +32,41 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     }
 
     override fun set() {
+        val libURL = "http://lib.bible.ac.kr"
         val newbooklist = arrayListOf<Mainbook>()
         val bookrentallist = arrayListOf<Mainbook>()
+        val notielist = arrayListOf <Mainnotice>()
 
         GlobalScope.launch(Dispatchers.Default) {
-            val newbookdocument = Jsoup.connect("http://lib.bible.ac.kr/Search/New").get()
-            val bookrentaldocument = Jsoup.connect("http://lib.bible.ac.kr/Search/").get()
-            val newbookelements = newbookdocument.select("div[class=guideBox]").select("ul[class=sponge-newbook-list]").select("li")
-            val bookrentalelements = bookrentaldocument.select("div[class=col-md-6 bostbooklist]").select("ul[class=user-welcome-page-thumb]").select("li")
+            val newbook_elements =
+                Jsoup.connect("$libURL/Search/New").get().select("div[class=guideBox]").select("ul[class=sponge-newbook-list]").select("li")
+            val bookrental_elements =
+                Jsoup.connect("$libURL/Search/").get().select("div[class=col-md-6 bostbooklist]").select("ul[class=user-welcome-page-thumb]").select("li")
+            val noticelements  =
+                Jsoup.connect("$libURL/").get().select("div[class=tab-pane active]").select("ul[class=data]").select("li[class=list]")
 
-            for (i in newbookelements.indices)
-                newbooklist.add(Mainbook(newbookelements[i].select("li a img").attr("src").toString()))
-            for (i in bookrentalelements.indices)
-                bookrentallist.add(Mainbook(bookrentalelements[i].select("a img").attr("src").toString()))
+            for (i in newbook_elements.indices)
+                newbooklist.add(Mainbook(newbook_elements[i].select("li a img").attr("src").toString()))
+            for (i in bookrental_elements.indices)
+                bookrentallist.add(Mainbook(bookrental_elements[i].select("a img").attr("src").toString()))
+            for (i in noticelements.indices)
+               notielist.add(Mainnotice(
+                   noticelements[i].select("a").text().toString(),
+                   noticelements[i].select("p").text().toString()))
+
             GlobalScope.launch(Dispatchers.Main) {
                 newbook.adapter = MainBooks(newbooklist)
                 bookrental1.adapter = MainBooks(bookrentallist)
+                notice_main.adapter = MainNotice_Recycler(notielist)
             }
         }
         newbook.layoutManager = LinearLayoutManager(this, LinearLayout.HORIZONTAL, false)
         bookrental1.layoutManager = LinearLayoutManager(this, LinearLayout.HORIZONTAL, false)
+        notice_main.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+
         newbook.setHasFixedSize(true)
         bookrental1.setHasFixedSize(true)
+        notice_main.setHasFixedSize(true)
 
         onevent()
     }
