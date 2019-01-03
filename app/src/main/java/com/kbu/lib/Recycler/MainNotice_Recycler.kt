@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.kbu.lib.R
 import com.kbu.lib.data.Mainnotice
+import com.kbu.lib.data.Search
 import kotlinx.android.synthetic.main.notice_list.view.*
 
 class NoticeViewHolder(view : View) : RecyclerView.ViewHolder(view){

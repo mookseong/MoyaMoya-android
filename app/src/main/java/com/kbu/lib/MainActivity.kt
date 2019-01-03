@@ -1,8 +1,11 @@
 package com.kbu.lib
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import android.view.KeyEvent
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -11,14 +14,37 @@ import com.kbu.lib.Recycler.MainBooks
 import com.kbu.lib.Recycler.MainNotice_Recycler
 import com.kbu.lib.data.Mainbook
 import com.kbu.lib.data.Mainnotice
+import com.kbu.lib.data.Search
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import org.jsoup.Jsoup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+
+
 
 class MainActivity : BaseActivity(R.layout.activity_main) {
 
     @SuppressLint("ShowToast")
     fun onevent(){
+
+        Booksearch.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                if (Booksearch.text.toString().isEmpty())
+                    Toast.makeText(this,"입력된 값이 없습니다.", Toast.LENGTH_LONG).show()
+                else if (Booksearch.text.toString() == " ")
+                    Toast.makeText(this, "입력된 값이 없습니다.", Toast.LENGTH_LONG).show()
+                else{
+                    val BookSearch = Intent(this, BookSearchActivity::class.java)
+                    BookSearch.putExtra("name", Booksearch.text.toString())
+                    startActivity(BookSearch)
+                }
+                return@OnKeyListener true
+            }
+            false
+        })
+
+
         LinearBackgroud.setOnClickListener {
             val imm  = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(Booksearch.windowToken, 0)
@@ -40,11 +66,10 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         val libURL = "http://lib.bible.ac.kr"
 
         newbook.layoutManager = LinearLayoutManager(this, LinearLayout.HORIZONTAL, false)
-        bookrental1.layoutManager = LinearLayoutManager(this, LinearLayout.HORIZONTAL, false)
-        notice_main.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-
         newbook.setHasFixedSize(true)
+        bookrental1.layoutManager = LinearLayoutManager(this, LinearLayout.HORIZONTAL, false)
         bookrental1.setHasFixedSize(true)
+        notice_main.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         notice_main.setHasFixedSize(true)
 
         GlobalScope.launch(Dispatchers.Main) {

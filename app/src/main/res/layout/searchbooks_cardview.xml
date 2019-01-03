@@ -25,16 +25,18 @@
 						android:layout_height="wrap_content"
 						android:layout_marginTop="15dp"
 						android:layout_marginLeft="120dp"
-						android:text="(누구나 쉽게 즐기는)C언어 콘서트"
+						android:id="@+id/Search_Title"
+						android:text="@string/TEST_TEXT"
 						android:textStyle="bold"
 						android:textSize="16sp"
 						tools:ignore="HardcodedText,RtlHardcoded"/>
 				<TextView
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
+						android:id="@+id/Search_Text"
 						android:layout_marginTop="5dp"
 						android:layout_marginLeft="120dp"
-						android:text="천인국 생능출판생능출판사, 2017, 지정도서"
+						android:text="@string/TEST_TEXT"
 						android:textSize="11sp"
 						tools:ignore="HardcodedText,RtlHardcoded,SmallSp"/>
 			</LinearLayout>
@@ -48,11 +50,13 @@
 				android:layout_marginLeft="30dp"
 				android:layout_marginTop="1dp"
 				app:cardCornerRadius="15dp"
-				app:cardElevation="5dp"
+				app:cardElevation="10dp"
 				tools:ignore="RtlHardcoded">
 			<ImageView
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
+					android:scaleType="centerCrop"
+					android:id="@+id/Search_bookimg"
 					android:contentDescription="TODO"
 					tools:ignore="ContentDescription,HardcodedText"/>
 		</android.support.v7.widget.CardView>

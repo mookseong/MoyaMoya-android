@@ -14,11 +14,37 @@
             android:layout_marginLeft="10dp"
             android:textSize="20sp"
             android:text="@string/searchtext"/>
-    <android.support.v7.widget.RecyclerView
-            android:layout_marginTop="10dp"
+    <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+                android:layout_marginTop="10dp"
+                android:id="@+id/Search_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+        </android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.CardView
+                android:id="@+id/search_cardview"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="15dp"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:layout_gravity="center|bottom" android:focusable="true"
+                tools:ignore="KeyboardInaccessibleWidget">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="더보기"
+                    android:layout_gravity="center" tools:ignore="HardcodedText"/>
+
+
+        </android.support.v7.widget.CardView>
+    </FrameLayout>
+
 
 </LinearLayout>
