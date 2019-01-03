@@ -41,6 +41,8 @@
                     <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:id="@+id/Img_information"
                             tools:ignore="ContentDescription"/>
                 </android.support.v7.widget.CardView>
                 <LinearLayout
@@ -48,9 +50,10 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
                     <TextView
-                            android:layout_width="230dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="30dp"
+                            android:id="@+id/Title_information"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:text="@string/TEST_TEXT"
@@ -58,6 +61,7 @@
                     <TextView
                             android:layout_width="230dp"
                             android:layout_height="wrap_content"
+                            android:id="@+id/text_information"
                             android:layout_marginTop="5dp"
                             android:textSize="11sp"
                             android:text="@string/TEST_TEXT"
@@ -74,12 +78,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="20dp"
-                        android:text="저장명 : "
+                        android:text="DDC : "
                         android:textSize="12.5sp"
                         tools:ignore="HardcodedText,RtlHardcoded"/>
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/DCC_information"
                         android:layout_marginTop="10dp"
                         android:text="@string/TEST_TEXT"
                         android:textSize="12.5sp"
@@ -101,6 +106,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:id="@+id/number_information"
                         android:text="@string/TEST_TEXT"
                         android:textSize="12.5sp"
                         tools:ignore="HardcodedText,RtlHardcoded"/>
@@ -121,6 +127,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:id="@+id/weiter_information"
                         android:text="@string/TEST_TEXT"
                         android:textSize="12.5sp"
                         tools:ignore="HardcodedText,RtlHardcoded"/>
@@ -143,6 +150,8 @@
     <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/possession_Information"
             android:layout_margin="15dp">
     </android.support.v7.widget.RecyclerView>
+
 </LinearLayout>

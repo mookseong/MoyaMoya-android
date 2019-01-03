@@ -1,10 +1,11 @@
 package com.kbu.lib
 
+import android.widget.Toast
 import com.kbu.lib.Base.BaseActivity
 
 class BookSearchActivity : BaseActivity(R.layout.activity_book_search) {
 
     override fun set(){
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(this,intent.getStringExtra("name") + "책을 검색합니다.", Toast.LENGTH_LONG).show()
     }
 }

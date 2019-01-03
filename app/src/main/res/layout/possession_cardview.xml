@@ -10,7 +10,7 @@
 			android:layout_height="80dp"
 			app:cardCornerRadius="15dp"
 			app:cardElevation="5dp"
-			android:layout_margin="15dp">
+			android:layout_margin="8dp">
 		<FrameLayout
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
@@ -39,6 +39,7 @@
 							android:layout_marginTop="10dp"
 							android:layout_marginLeft="10dp"
 							android:textSize="12.5dp"
+							android:id="@+id/number"
 							android:text="@string/TEST_TEXT"
 							tools:ignore="HardcodedText,RtlHardcoded,SpUsage"/>
 				</LinearLayout>
@@ -60,6 +61,7 @@
 							android:layout_marginTop="5dp"
 							android:layout_marginLeft="10dp"
 							android:textSize="12.5dp"
+							android:id="@+id/callnumber"
 							android:text="@string/TEST_TEXT"
 							tools:ignore="HardcodedText,RtlHardcoded,SpUsage"/>
 				</LinearLayout>
@@ -81,6 +83,7 @@
 							android:layout_marginTop="5dp"
 							android:layout_marginLeft="10dp"
 							android:textSize="12.5dp"
+							android:id="@+id/possession"
 							android:text="@string/TEST_TEXT"
 							tools:ignore="HardcodedText,RtlHardcoded,SpUsage"/>
 				</LinearLayout>
@@ -92,6 +95,7 @@
 					android:layout_marginRight="30dp"
 					android:textSize="20sp"
 					android:textStyle="bold"
+					android:id="@+id/rental"
 					android:text="@string/TEST_TEXT"
 					tools:ignore="HardcodedText,RtlHardcoded"/>
 		</FrameLayout>
