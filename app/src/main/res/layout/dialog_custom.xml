@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_margin="30dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="5dp"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:ignore="UselessLeaf">
+            <TextView
+                    android:text="인터넷이 연결되어있지않습니다."
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:layout_margin="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" tools:ignore="HardcodedText"/>
+            <TextView
+                    android:text="인터넷이 연결되어 있지 않거나 연결에 문제가 발생하였습니다.\n나중에 다시 시도하시거나 계속 문제가 발생된다면\nmookseong147@gmail.com으로 문의해주시기 바랍니다."
+                    android:layout_marginStart="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="HardcodedText"/>
+            <view
+                    android:layout_width="wrap_content"
+                  android:layout_height="20dp">
+
+            </view>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

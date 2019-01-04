@@ -8,11 +8,20 @@ import com.kbu.lib.R
 import com.kbu.lib.data.Mainnotice
 import com.kbu.lib.data.Search
 import kotlinx.android.synthetic.main.notice_list.view.*
+import android.support.v4.content.ContextCompat.startActivity
+import android.content.Intent
+import android.net.Uri
+import com.kbu.lib.BookInformationActivity
+
 
 class NoticeViewHolder(view : View) : RecyclerView.ViewHolder(view){
     fun bindItem(data : Mainnotice){
         itemView.noticetitle.text = data.Title
         itemView.noticedate.text = data.date
+        itemView.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://lib.bible.ac.kr${data.url}"))
+            itemView.context.startActivity(intent)
+        }
     }
 }
 

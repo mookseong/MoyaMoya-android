@@ -4,7 +4,9 @@
           package="com.kbu.lib">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <application
             android:allowBackup="true"
@@ -26,11 +28,18 @@
         <activity android:name=".BookSearchActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".MainActivity"
-            />
+                    android:value=".MainActivity"/>
         </activity>
         <activity android:name=".BookInformationActivity">
         </activity>
+        <activity android:name=".DeveloperINFOActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".MainActivity"/>
+        </activity>
+        <meta-data
+                android:name="com.google.android.gms.ads.APPLICATION_ID"
+                android:value="ca-app-pub-3042326807242532~3097610906"/>
     </application>
 
 </manifest>

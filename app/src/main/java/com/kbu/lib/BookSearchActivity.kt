@@ -1,6 +1,8 @@
 package com.kbu.lib
 
+import android.content.DialogInterface
 import android.support.v4.app.NavUtils
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.MenuItem
@@ -37,53 +39,77 @@ class BookSearchActivity : BaseActivity(R.layout.activity_book_search) {
         }
     }
 
+
     override fun set(){
-        onevent()
-        var listCount = 1
+        if (!NetWorkch()){
 
-        Toast.makeText(this,"\""+ intent.getStringExtra("name") + "\" 책을 검색합니다.", Toast.LENGTH_SHORT).show()
-        val URL : String = intent.getStringExtra("name")
-        val libURL = "http://lib.bible.ac.kr/Search/?q=$URL&searchTruncate=true&campuscode=00"
-        val Datalist = arrayListOf<Search>()
+            val builder = AlertDialog.Builder(this)
+            with(builder)
+            {
+                setTitle("인터넷이 연결되어있지않습니다.")
+                setMessage("인터넷이 연결되어 있지 않거나 연결에 문제가 발생하였습니다.\n나중에 다시 시도하시거나 계속 문제가 발생된다면 mookseong147@gmail.com으로 문의해주시기 바랍니다.")
+                setPositiveButton("종료", DialogInterface.OnClickListener(function = positiveButtonClick))
+                show()
+            }
+        }else {
+            onevent()
+            var listCount = 1
 
-        Search_recyclerview.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        Search_recyclerview.setHasFixedSize(true)
+            Toast.makeText(this, "\"" + intent.getStringExtra("name") + "\" 책을 검색합니다.", Toast.LENGTH_SHORT).show()
+            val URL: String = intent.getStringExtra("name")
+            val libURL = "http://lib.bible.ac.kr/Search/?q=$URL&searchTruncate=true&campuscode=00"
+            val Datalist = arrayListOf<Search>()
 
-        GlobalScope.launch(Dispatchers.Main) {
+            Search_recyclerview.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+            Search_recyclerview.setHasFixedSize(true)
 
-            val asysnc = GlobalScope.async(Dispatchers.IO) {
-                //Log.d("Test",libURL)
-                val DATA_elementstitle_P1 = Jsoup.connect(libURL).get().select("div[class=col-md-9 page-search-left-list]").select("div[class=search-list-result]")
-
-                for (i in DATA_elementstitle_P1.indices) {
-                    Datalist.add(Search(
-                        DATA_elementstitle_P1[i].select("a")[0].select("img").attr("src").toString(),
-                        DATA_elementstitle_P1[i].select("div[class=sponge-list-title]").select("a").text().toString(),
-                        DATA_elementstitle_P1[i].select("div[class=sponge-list-content]").select("span")[0].text().toString() + DATA_elementstitle_P1[i].select("div[class=sponge-list-content]").select("span")[1].text().toString(),
-                        DATA_elementstitle_P1[i].select("div[class=sponge-list-title]").select("a").attr("href").toString()
-                    ))
-                }
-            }.await()
-            Search_recyclerview.adapter = BookSearch_Recycler(Datalist)
-
-        }
-        search_cardview.setOnClickListener{
-            listCount ++
             GlobalScope.launch(Dispatchers.Main) {
+
                 val asysnc = GlobalScope.async(Dispatchers.IO) {
-                    val DATA_elementstitle_P1 = Jsoup.connect("$libURL&p=$listCount").get().select("div[class=col-md-9 page-search-left-list]").select("div[class=search-list-result]")
+                    //Log.d("Test",libURL)
+                    val DATA_elementstitle_P1 =
+                        Jsoup.connect(libURL).get().select("div[class=col-md-9 page-search-left-list]")
+                            .select("div[class=search-list-result]")
+
                     for (i in DATA_elementstitle_P1.indices) {
-                        Datalist.add(Search(
-                            DATA_elementstitle_P1[i].select("a")[0].select("img").attr("src").toString(),
-                            DATA_elementstitle_P1[i].select("div[class=sponge-list-title]").select("a").text().toString(),
-                            DATA_elementstitle_P1[i].select("div[class=sponge-list-content]").select("span")[0].text().toString() + DATA_elementstitle_P1[i].select("div[class=sponge-list-content]").select("span")[1].text().toString(),
-                            DATA_elementstitle_P1[i].select("div[class=sponge-list-title]").select("a").attr("href").toString()
-                        ))
+                        Datalist.add(
+                            Search(
+                                DATA_elementstitle_P1[i].select("a")[0].select("img").attr("src").toString(),
+                                DATA_elementstitle_P1[i].select("div[class=sponge-list-title]").select("a").text().toString(),
+                                DATA_elementstitle_P1[i].select("div[class=sponge-list-content]").select("span")[0].text().toString() + DATA_elementstitle_P1[i].select(
+                                    "div[class=sponge-list-content]"
+                                ).select("span")[1].text().toString(),
+                                DATA_elementstitle_P1[i].select("div[class=sponge-list-title]").select("a").attr("href").toString()
+                            )
+                        )
                     }
                 }.await()
                 Search_recyclerview.adapter = BookSearch_Recycler(Datalist)
-                Search_recyclerview.smoothScrollToPosition (Datalist.size - 11)
 
+            }
+            search_cardview.setOnClickListener {
+                listCount++
+                GlobalScope.launch(Dispatchers.Main) {
+                    val asysnc = GlobalScope.async(Dispatchers.IO) {
+                        val DATA_elementstitle_P1 = Jsoup.connect("$libURL&p=$listCount").get()
+                            .select("div[class=col-md-9 page-search-left-list]").select("div[class=search-list-result]")
+                        for (i in DATA_elementstitle_P1.indices) {
+                            Datalist.add(
+                                Search(
+                                    DATA_elementstitle_P1[i].select("a")[0].select("img").attr("src").toString(),
+                                    DATA_elementstitle_P1[i].select("div[class=sponge-list-title]").select("a").text().toString(),
+                                    DATA_elementstitle_P1[i].select("div[class=sponge-list-content]").select("span")[0].text().toString() + DATA_elementstitle_P1[i].select(
+                                        "div[class=sponge-list-content]"
+                                    ).select("span")[1].text().toString(),
+                                    DATA_elementstitle_P1[i].select("div[class=sponge-list-title]").select("a").attr("href").toString()
+                                )
+                            )
+                        }
+                    }.await()
+                    Search_recyclerview.adapter = BookSearch_Recycler(Datalist)
+                    Search_recyclerview.smoothScrollToPosition(Datalist.size - 11)
+
+                }
             }
         }
     }
