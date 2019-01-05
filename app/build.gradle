@@ -3,6 +3,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    signingConfigs {
+        config {
+            storeFile file('/Users/limseongmuk/KBU_lib')
+            keyAlias 'KBU_Lib'
+            keyPassword 'tjdanr51'
+            storePassword 'kim1231201'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.kbu.lib"
@@ -11,19 +19,22 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             ext.kotlin_version = '1.3.11'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
+            signingConfig signingConfigs.config
         }
         dataBinding {
             enabled true
         }
     }
     buildToolsVersion '28.0.3'
+    productFlavors {
+    }
 }
 kotlin {
     experimental {

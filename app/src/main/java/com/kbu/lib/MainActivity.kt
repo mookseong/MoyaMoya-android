@@ -54,8 +54,9 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             imm.hideSoftInputFromWindow(Booksearch.windowToken, 0)
         }
         developer_pay.setOnClickListener{
-            val Developer_money = Intent(this, DeveloperINFOActivity::class.java)
-            startActivity(Developer_money)
+            Toast.makeText(this,"준비중입니다.", Toast.LENGTH_LONG).show()
+//            val Developer_money = Intent(this, DeveloperINFOActivity::class.java)
+//            startActivity(Developer_money)
         }
         Bsearch_button.setOnClickListener{
             if (Booksearch.text.toString().isEmpty())

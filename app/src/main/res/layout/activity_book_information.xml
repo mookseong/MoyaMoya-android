@@ -14,8 +14,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:textSize="20sp"
-            android:text="@string/possessioninformation"
-            tools:ignore="RtlHardcoded"/>
+            android:text="도서 정보"
+            tools:ignore="HardcodedText,RtlHardcoded"/>
     <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
