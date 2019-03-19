@@ -19,12 +19,8 @@ import com.kbu.lib.data.Search
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import org.jsoup.Jsoup
-import android.view.inputmethod.EditorInfo
-import android.widget.TextView
-import android.net.ConnectivityManager
 import android.support.v7.app.AlertDialog
-import android.view.Window
-import android.view.Gravity
+
 
 
 
@@ -53,11 +49,11 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             val imm  = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(Booksearch.windowToken, 0)
         }
-        developer_pay.setOnClickListener{
-            Toast.makeText(this,"준비중입니다.", Toast.LENGTH_LONG).show()
-//            val Developer_money = Intent(this, DeveloperINFOActivity::class.java)
-//            startActivity(Developer_money)
-        }
+//        developer_pay.setOnClickListener{
+//            Toast.makeText(this,"준비중입니다.", Toast.LENGTH_LONG).show()
+////            val Developer_money = Intent(this, DeveloperINFOActivity::class.java)
+////            startActivity(Developer_money)
+//        }
         Bsearch_button.setOnClickListener{
             if (Booksearch.text.toString().isEmpty())
                 Toast.makeText(this,"입력된 값이 없습니다.", Toast.LENGTH_LONG).show()

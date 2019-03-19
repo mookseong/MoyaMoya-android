@@ -4,18 +4,18 @@
           package="com.kbu.lib">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <application
+            android:usesCleartextTraffic="true"
             android:allowBackup="true"
             android:icon="@drawable/moyamoya"
             android:label="@string/app_name"
             android:roundIcon="@drawable/moyamoya_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
-            tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+            tools:ignore="AllowBackup,GoogleAppIndexingWarning" tools:targetApi="n">
         <activity
                 android:name=".MainActivity"
                 android:windowSoftInputMode="stateHidden|adjustPan">
@@ -37,9 +37,6 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".MainActivity"/>
         </activity>
-        <meta-data
-                android:name="com.google.android.gms.ads.APPLICATION_ID"
-                android:value="ca-app-pub-3042326807242532~3097610906"/>
     </application>
 
 </manifest>

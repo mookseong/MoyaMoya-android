@@ -128,6 +128,7 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    <!--
     <android.support.v7.widget.CardView
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
@@ -144,6 +145,6 @@
                 android:scaleType="centerCrop"
                 tools:ignore="ContentDescription" app:srcCompat="@drawable/coffee"
         />
-
     </android.support.v7.widget.CardView>
+    -->
 </FrameLayout>
