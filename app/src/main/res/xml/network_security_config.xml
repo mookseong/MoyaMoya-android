@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<network-securitzy-config>
+<network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">lib.bible.ac.kr</domain>
     </domain-config>
-    <base-config cleartextTrafficPermitted="true" />
-</network-securitzy-config>
+</network-security-config>

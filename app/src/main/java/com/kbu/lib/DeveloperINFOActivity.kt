@@ -9,16 +9,15 @@ import com.kbu.lib.Base.BaseActivity
 import kotlinx.android.synthetic.main.activity_developer_info.*
 
 
-class DeveloperINFOActivity : BaseActivity(R.layout.activity_developer_info){
+abstract class DeveloperINFOActivity : BaseActivity(R.layout.activity_developer_info){
 
-    override fun set() {
+    override fun settingActivity() {
 //        MobileAds.initialize(this, "ca-app-pub-3042326807242532~3097610906")
 //        mInterstitialAd = InterstitialAd(this)
 //        mInterstitialAd.adUnitId = "ca-app-pub-3042326807242532/8896732495"
 //        mInterstitialAd.loadAd(AdRequest.Builder().build())
 
         Toast.makeText(this,"안녕하세요! 방갑습니다", Toast.LENGTH_LONG).show()
-;
 //        img_pay.setOnClickListener {
 //            Toast.makeText(this,"이미지 광고 보기", Toast.LENGTH_LONG).show()
 //            if (mInterstitialAd.isLoaded)

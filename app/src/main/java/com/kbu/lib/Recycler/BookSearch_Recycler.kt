@@ -11,8 +11,8 @@ import com.kbu.lib.R
 import com.kbu.lib.data.Search
 import kotlinx.android.synthetic.main.searchbooks_cardview.view.*
 
-class SearchViewHolder(view : View) : RecyclerView.ViewHolder(view){
-    fun bindItem(data : Search){
+class SearchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    fun bindItem(data: Search) {
         Glide.with(itemView.context).load(data.Img).into(itemView.Search_bookimg)
         itemView.Search_Title.text = data.Title
         itemView.Search_Text.text = data.Text
@@ -26,7 +26,7 @@ class SearchViewHolder(view : View) : RecyclerView.ViewHolder(view){
 }
 
 class BookSearch_Recycler(val searchlist: ArrayList<Search>) : RecyclerView.Adapter<SearchViewHolder>() {
-    override fun getItemCount(): Int  = searchlist.size
+    override fun getItemCount(): Int = searchlist.size
 
 
     override fun onBindViewHolder(p0: SearchViewHolder, p1: Int) {
