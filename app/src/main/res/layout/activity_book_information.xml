@@ -9,7 +9,8 @@
         android:orientation="vertical"
         tools:context=".BookInformationActivity">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
+            android:descendantFocusability="blocksDescendants"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:ignore="UselessParent">
@@ -185,5 +186,5 @@
                     >
             </android.support.v7.widget.RecyclerView>
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

@@ -27,7 +27,6 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         val hd = Handler()
     }
 
-    @SuppressLint("ShowToast")
     override fun setEvent() {
         Booksearch.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
