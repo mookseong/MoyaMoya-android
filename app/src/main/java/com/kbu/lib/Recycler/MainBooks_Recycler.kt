@@ -15,19 +15,19 @@ class BookViewHolder(view : View) : RecyclerView.ViewHolder(view){
     fun bindItem(data: Mainbook) {
         Glide.with(itemView.context).load(data.Img).into(itemView.bookimg)
         itemView.setOnClickListener {
-            val BookInformation = Intent(itemView.context, BookInformationActivity::class.java)
-            BookInformation.putExtra("URL", data.URL)
-            BookInformation.putExtra("IMG", data.Img)
-            itemView.context.startActivity(BookInformation)
+            val intent = Intent(itemView.context, BookInformationActivity::class.java)
+            intent.putExtra("URL", data.URL)
+            intent.putExtra("IMG", data.Img)
+            itemView.context.startActivity(intent)
         }
     }
 }
 
-class MainBooks(val booklist : ArrayList<Mainbook>) : RecyclerView.Adapter<BookViewHolder>(){
-    override fun getItemCount() = booklist.size
+class MainBooks(private val bookList : ArrayList<Mainbook>) : RecyclerView.Adapter<BookViewHolder>(){
+    override fun getItemCount() = bookList.size
 
     override fun onBindViewHolder(p0: BookViewHolder, p1: Int) {
-        p0.bindItem(booklist[p1])
+        p0.bindItem(bookList[p1])
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): BookViewHolder =

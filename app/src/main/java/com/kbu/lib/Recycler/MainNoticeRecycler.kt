@@ -25,7 +25,7 @@ class NoticeViewHolder(view : View) : RecyclerView.ViewHolder(view){
     }
 }
 
-class MainNotice_Recycler(val notice: ArrayList<Mainnotice>) : RecyclerView.Adapter<NoticeViewHolder>() {
+class MainNoticeRecycler(val notice: ArrayList<Mainnotice>) : RecyclerView.Adapter<NoticeViewHolder>() {
     override fun getItemCount(): Int  = notice.size
 
     override fun onBindViewHolder(p0: NoticeViewHolder, p1: Int) {

@@ -17,20 +17,20 @@ class SearchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         itemView.Search_Title.text = data.Title
         itemView.Search_Text.text = data.Text
         itemView.setOnClickListener {
-            val BookInformation = Intent(itemView.context, BookInformationActivity::class.java)
-            BookInformation.putExtra("URL", data.Url)
-            BookInformation.putExtra("IMG", data.Img)
-            itemView.context.startActivity(BookInformation)
+            val intent = Intent(itemView.context, BookInformationActivity::class.java)
+            intent.putExtra("URL", data.Url)
+            intent.putExtra("IMG", data.Img)
+            itemView.context.startActivity(intent)
         }
     }
 }
 
-class BookSearch_Recycler(val searchlist: ArrayList<Search>) : RecyclerView.Adapter<SearchViewHolder>() {
-    override fun getItemCount(): Int = searchlist.size
+class BookSearchRecycler(private val searchList: ArrayList<Search>) : RecyclerView.Adapter<SearchViewHolder>() {
+    override fun getItemCount(): Int = searchList.size
 
 
     override fun onBindViewHolder(p0: SearchViewHolder, p1: Int) {
-        p0.bindItem(searchlist[p1])
+        p0.bindItem(searchList[p1])
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): SearchViewHolder =

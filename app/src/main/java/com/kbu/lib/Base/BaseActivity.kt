@@ -11,7 +11,7 @@ import android.support.v7.app.AlertDialog
 
 abstract class BaseActivity(private val LayoutID: Int) : AppCompatActivity() {
     val libURL = "http://lib.bible.ac.kr"
-    val positiveButtonClick = { dialog: DialogInterface, which: Int -> finish() }
+    val positiveButtonClick = { _: DialogInterface, _: Int -> finish() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,14 +21,16 @@ abstract class BaseActivity(private val LayoutID: Int) : AppCompatActivity() {
             window.decorView.systemUiVisibility = SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 
         if (!checkNetworkService()) {
-            with(AlertDialog.Builder(this))
-            {
-                setTitle("인터넷이 연결되어있지않습니다.")
-                setMessage("인터넷이 연결되어 있지 않거나 연결에 문제가 발생하였습니다.\n나중에 다시 시도하시거나 계속 문제가 발생된다면 mookseong147@gmail.com으로 문의해주시기 바랍니다.")
-                setPositiveButton("종료", DialogInterface.OnClickListener(function = positiveButtonClick))
-                show()
-            }
-        } else
+            AlertDialog.Builder(this)
+                .setTitle("인터넷이 연결되어있지않습니다.")
+                .setMessage("인터넷이 연결되어 있지 않거나 연결에 문제가 발생하였습니다.\n나중에 다시 시도해주세요")
+                .setPositiveButton(
+                    "종료",
+                    DialogInterface.OnClickListener(function = positiveButtonClick)
+                )
+                .show()
+        }
+        else
             settingActivity()
     }
 

@@ -17,7 +17,7 @@ class InformationViewHolder(view : View) : RecyclerView.ViewHolder(view){
     }
 }
 
-class BookInformation_recycler(val Information: ArrayList<Information>) : RecyclerView.Adapter<InformationViewHolder>() {
+class BookInformationRecycler(private val Information: ArrayList<Information>) : RecyclerView.Adapter<InformationViewHolder>() {
     override fun getItemCount(): Int  = Information.size
 
     override fun onBindViewHolder(p0: InformationViewHolder, p1: Int) {

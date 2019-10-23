@@ -1,190 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        android:orientation="vertical"
-        tools:context=".BookInformationActivity">
+        android:descendantFocusability="blocksDescendants"
+        tools:ignore="UselessParent">
 
-    <android.support.v4.widget.NestedScrollView
-            android:descendantFocusability="blocksDescendants"
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:ignore="UselessParent">
+            android:orientation="vertical"
+            tools:ignore="ScrollViewSize">
 
-        <LinearLayout
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:text="도서 정보"
+                android:textSize="20sp"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+
+        <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:ignore="ScrollViewSize"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp"
+                tools:ignore="UselessLeaf">
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="20sp"
-                    android:text="도서 정보"
-                    tools:ignore="HardcodedText,RtlHardcoded"/>
-
-            <android.support.v7.widget.CardView
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp"
-                    tools:ignore="UselessLeaf">
+                    android:orientation="vertical">
 
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        tools:ignore="UselessParent">
+
+                    <android.support.v7.widget.CardView
+                            android:layout_width="90dp"
+                            android:layout_height="110dp"
+                            android:layout_margin="20dp"
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="5dp">
+
+                        <ImageView
+                                android:id="@+id/Img_information"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                tools:ignore="ContentDescription" />
+                    </android.support.v7.widget.CardView>
 
                     <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            tools:ignore="UselessParent">
-
-                        <android.support.v7.widget.CardView
-                                android:layout_width="90dp"
-                                android:layout_height="110dp"
-                                android:layout_margin="20dp"
-                                app:cardElevation="5dp"
-                                app:cardCornerRadius="15dp">
-
-                            <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:scaleType="centerCrop"
-                                    android:id="@+id/Img_information"
-                                    tools:ignore="ContentDescription"/>
-                        </android.support.v7.widget.CardView>
-
-                        <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                            <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="30dp"
-                                    android:id="@+id/Title_information"
-                                    android:textSize="16sp"
-                                    android:textStyle="bold"
-                                    android:text="@string/TEST_TEXT"
-                                    tools:ignore="HardcodedText"/>
-
-                            <TextView
-                                    android:layout_width="230dp"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/text_information"
-                                    android:layout_marginTop="5dp"
-                                    android:textSize="11sp"
-                                    android:text="@string/TEST_TEXT"
-                                    tools:ignore="HardcodedText,SmallSp"/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
                         <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginLeft="20dp"
-                                android:text="DDC : "
-                                android:textSize="12.5sp"
-                                tools:ignore="HardcodedText,RtlHardcoded"/>
-
-                        <TextView
+                                android:id="@+id/Title_information"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/DCC_information"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginTop="30dp"
                                 android:text="@string/TEST_TEXT"
-                                android:textSize="12.5sp"
-                                tools:ignore="HardcodedText,RtlHardcoded"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                tools:ignore="HardcodedText" />
 
                         <TextView
-                                android:layout_width="wrap_content"
+                                android:id="@+id/text_information"
+                                android:layout_width="230dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginLeft="20dp"
-                                android:text="청구기호 : "
-                                android:textSize="12.5sp"
-                                tools:ignore="HardcodedText,RtlHardcoded"/>
-
-                        <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:id="@+id/number_information"
+                                android:layout_marginTop="5dp"
                                 android:text="@string/TEST_TEXT"
-                                android:textSize="12.5sp"
-                                tools:ignore="HardcodedText,RtlHardcoded"/>
+                                android:textSize="11sp"
+                                tools:ignore="HardcodedText,SmallSp" />
                     </LinearLayout>
-
-                    <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                        <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginLeft="20dp"
-                                android:text="서명/저자 : "
-                                android:textSize="12.5sp"
-                                tools:ignore="HardcodedText,RtlHardcoded"/>
-
-                        <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:id="@+id/weiter_information"
-                                android:text="@string/TEST_TEXT"
-                                android:textSize="12.5sp"
-                                tools:ignore="HardcodedText,RtlHardcoded"/>
-                    </LinearLayout>
-
-                    <View
-                            android:layout_width="wrap_content"
-                            android:layout_height="10dp">
-                    </View>
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="20sp"
-                    android:text="@string/possessioninformation"
-                    tools:ignore="RtlHardcoded"/>
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-            <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/possession_Information"
-                    android:layout_margin="15dp"
-                    >
-            </android.support.v7.widget.RecyclerView>
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</LinearLayout>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:text="DDC : "
+                            android:textSize="12.5sp"
+                            tools:ignore="HardcodedText,RtlHardcoded" />
+
+                    <TextView
+                            android:id="@+id/DCC_information"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/TEST_TEXT"
+                            android:textSize="12.5sp"
+                            tools:ignore="HardcodedText,RtlHardcoded" />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:text="청구기호 : "
+                            android:textSize="12.5sp"
+                            tools:ignore="HardcodedText,RtlHardcoded" />
+
+                    <TextView
+                            android:id="@+id/number_information"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/TEST_TEXT"
+                            android:textSize="12.5sp"
+                            tools:ignore="HardcodedText,RtlHardcoded" />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:text="서명/저자 : "
+                            android:textSize="12.5sp"
+                            tools:ignore="HardcodedText,RtlHardcoded" />
+
+                    <TextView
+                            android:id="@+id/weiter_information"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/TEST_TEXT"
+                            android:textSize="12.5sp"
+                            tools:ignore="HardcodedText,RtlHardcoded" />
+                </LinearLayout>
+
+                <View
+                        android:layout_width="wrap_content" android:layout_height="10dp"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/possessioninformation"
+                android:textSize="20sp"
+                tools:ignore="RtlHardcoded" />
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/possession_Information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

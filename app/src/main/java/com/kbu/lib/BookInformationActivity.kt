@@ -5,13 +5,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.kbu.lib.Base.BaseActivity
-import com.kbu.lib.Recycler.BookInformation_recycler
+import com.kbu.lib.Recycler.BookInformationRecycler
 import com.kbu.lib.data.Information
 import kotlinx.android.synthetic.main.activity_book_information.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 
 class BookInformationActivity : BaseActivity(R.layout.activity_book_information) {
@@ -20,59 +20,68 @@ class BookInformationActivity : BaseActivity(R.layout.activity_book_information)
     }
 
     override fun settingActivity() {
-        val URL: String = intent.getStringExtra("URL")
+        val url: String = intent.getStringExtra("URL")
+
+        val possessInformation = arrayListOf<Information>()
+
         possession_Information.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         possession_Information.setHasFixedSize(true)
+        possession_Information.adapter = BookInformationRecycler(possessInformation)
 
-        GlobalScope.launch(Dispatchers.Main) {
-            val Datalist = arrayListOf<String>()
-            val TextviewId = arrayListOf<TextView>(
+
+            val arrayList = arrayListOf<String>()
+            val arrayListID = arrayListOf<TextView>(
                 Title_information,
                 DCC_information,
                 number_information,
                 weiter_information,
                 text_information
             )
-            val titlelist = arrayListOf("DDC", "청구기호", "서명/저자", "발행사항")
-            val asysnc = GlobalScope.async(Dispatchers.IO) {
-                val DATA_elementstitle =
-                    Jsoup.connect(libURL + URL).get().select("div[class=col-md-10 detail-table-right]")
-                val DATA_elementstext = DATA_elementstitle.select("dl")
-                Datalist.add(DATA_elementstitle.select("div[class=sponge-book-title]").text().toString())
-                for (i in DATA_elementstext.indices) {
-                    for (j in 0..3) {
-                        if (DATA_elementstext[i].select("dt").text().toString() == titlelist[j]) {
-                            Datalist.add(DATA_elementstext[i].select("dd").text().toString())
-                            //Log.d("TEST$i", DATA_elementstext[i].select("dd").text().toString())
+
+            val list = arrayListOf("DDC", "청구기호", "서명/저자", "발행사항")
+        GlobalScope.launch(Dispatchers.Default) {
+
+            withContext(Dispatchers.IO) {
+                val elementTitle =
+                    Jsoup.connect(libURL + url).get()
+                        .select("div[class=col-md-10 detail-table-right]")
+                val elements = elementTitle.select("dl")
+                arrayList.add(elementTitle.select("div[class=sponge-book-title]").text().toString())
+                withContext(Dispatchers.Default) {
+                    for (i in elements.indices) {
+                        for (j in 0..3) {
+                            if (elements[i].select("dt").text().toString() == list[j]) {
+                                arrayList.add(elements[i].select("dd").text().toString())
+                            }
                         }
                     }
                 }
-            }.await()
-            for (i in Datalist.indices)
-                TextviewId[i].text = Datalist[i]
+            }
+            for (i in arrayList.indices)
+                arrayListID[i].text = arrayList[i]
         }
         GlobalScope.launch(Dispatchers.Main) {
-            val possess_information = arrayListOf<Information>()
-
-            val asysnc = GlobalScope.async(Dispatchers.IO) {
-                val possess_information_elements =
-                    Jsoup.connect(libURL + URL).get()
+            withContext(Dispatchers.IO) {
+                val possessInformationElements =
+                    Jsoup.connect(libURL + url).get()
                         .select("div[class=sponge-guide-Box-table sponge-detail-table]")
-                        .select("table[class=table-striped sponge-table-default]").select("tbody tr")
-                for (i in possess_information_elements.indices) {
-                    possess_information.add(
-                        Information(
-                            possess_information_elements[i].select("td")[0].text().toString(),
-                            possess_information_elements[i].select("td")[1].text().toString(),
-                            possess_information_elements[i].select("td")[2].text().toString(),
-                            possess_information_elements[i].select("td")[3].text().toString()
+                        .select("table[class=table-striped sponge-table-default]")
+                        .select("tbody tr")
+                withContext(Dispatchers.Default) {
+                    for (i in possessInformationElements.indices) {
+                        possessInformation.add(
+                            Information(
+                                possessInformationElements[i].select("td")[0].text().toString(),
+                                possessInformationElements[i].select("td")[1].text().toString(),
+                                possessInformationElements[i].select("td")[2].text().toString(),
+                                possessInformationElements[i].select("td")[3].text().toString()
+                            )
                         )
-                    )
+                    }
                 }
-            }.await()
-            possession_Information.adapter = BookInformation_recycler(possess_information)
+            }
+            (possession_Information.adapter as BookInformationRecycler).notifyDataSetChanged()
         }
         Glide.with(this).load(intent.getStringExtra("IMG")).into(Img_information)
-
     }
 }
