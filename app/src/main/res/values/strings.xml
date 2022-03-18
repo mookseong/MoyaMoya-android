@@ -3,7 +3,7 @@
     <string name="searche">검색하실 책 제목을 입력해주세요</string>
     <string name="newBooks">신작 도서</string>
     <string name="bookrental">최근 대출된 도서</string>
-    <string name="notice">공지 사항</string>
+
     <string name="bookinformation">도서 정보</string>
     <string name="possessioninformation">소장 정보</string>
     <string name="number">등록 번호 :</string>
@@ -11,5 +11,12 @@
     <string name="possessionbook">소장처 :</string>
     <string name="searchtext">검색 정보</string>
     <string name="TEST_TEXT">N/A</string>
-    <string name="Developer">안녕하세요!\n어플이 괜찮았다면 커피 한잔\n사주시는건 어떠세요?ㅠㅠ</string>
+
+    <string name="book">단행본</string>
+    <string name="FAQ">FAQ</string>
+    <string name="notice">공지사항</string>
+    <string name="master">학위논문</string>
+    <string name="contest">공모전 수상작</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
