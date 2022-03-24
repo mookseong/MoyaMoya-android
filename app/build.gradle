@@ -5,7 +5,14 @@
     apply plugin: 'kotlin-kapt'
 
 android {
-
+    signingConfigs {
+        config {
+            storeFile file('/Users/limseongmuk/Key/KBU_lib')
+            keyAlias 'KBU_Lib_key'
+            keyPassword '~~~'
+            storePassword '~~~'
+        }
+    }
     compileSdk 31
     defaultConfig {
         applicationId "com.kbu.lib"
