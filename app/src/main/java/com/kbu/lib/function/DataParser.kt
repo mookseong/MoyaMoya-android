@@ -7,17 +7,31 @@ import org.jsoup.select.Elements
 
 class DataParser {
 
-    fun elements(URL : String, cssQueue: String, queue_ul : String, queue_li : String): Elements =
+    fun elements(URL: String, cssQueue: String, queue_ul: String, queue_li: String): Elements =
         Jsoup.connect(URL).get().select(cssQueue).select(queue_ul).select(queue_li)
 
-    fun elements(URL : String, cssQueue: String, queue_ul : String ): Elements =
+    fun elements(URL: String, cssQueue: String, queue_ul: String): Elements =
         Jsoup.connect(URL).get().select(cssQueue).select(queue_ul)
 
-    fun elementsSelect(elements: Elements,  cssQueue: String, queue : String) : String =
-        elements.select(cssQueue).select(queue).text().toString()
+    fun elements(URL: String, cssQueue: String): Elements =
+        Jsoup.connect(URL).get().select(cssQueue)
+
+    fun elementSelect(
+        element: Elements,
+        ListIndex: Int,
+        selectIndex: Int,
+        cssQueue: String
+    ): String =
+        element[ListIndex].select(cssQueue)[selectIndex].text()
 
 
-    fun elementsIndex(elements : Elements, queue1 : String, queue1_key : String, queue2 : String, queue2_key : String): ArrayList<MainViewBookList> {
+    fun elementsIndex(
+        elements: Elements,
+        queue1: String,
+        queue1_key: String,
+        queue2: String,
+        queue2_key: String
+    ): ArrayList<MainViewBookList> {
         val newList = arrayListOf<MainViewBookList>()
         for (i in elements.indices)
             newList.add(

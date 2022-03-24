@@ -1,22 +1,23 @@
 <resources>
     <string name="app_name">모야모야</string>
-    <string name="searche">검색하실 책 제목을 입력해주세요</string>
+    <string name="book_title_search">검색하실 책 제목을 입력해주세요</string>
     <string name="newBooks">신작 도서</string>
-    <string name="bookrental">최근 대출된 도서</string>
+    <string name="info_book_rental">최근 대출된 도서</string>
 
-    <string name="bookinformation">도서 정보</string>
-    <string name="possessioninformation">소장 정보</string>
-    <string name="number">등록 번호 :</string>
-    <string name="callnumber">청구 기호 :</string>
-    <string name="possessionbook">소장처 :</string>
-    <string name="searchtext">검색 정보</string>
-    <string name="TEST_TEXT">N/A</string>
+    <string name="info_book">도서 정보</string>
+    <string name="info_borrow">소장 정보</string>
+    <string name="info_number">등록 번호 :</string>
+    <string name="info_call_number">청구 기호 :</string>
+    <string name="info_possession_book">소장처 :</string>
+    <string name="search_text">검색 정보</string>
+    <string name="TEST_TEXT">불러오는중</string>
 
-    <string name="book">단행본</string>
-    <string name="FAQ">FAQ</string>
-    <string name="notice">공지사항</string>
-    <string name="master">학위논문</string>
-    <string name="contest">공모전 수상작</string>
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_book">단행본</string>
+    <string name="main_FAQ">FAQ</string>
+    <string name="main_notice">공지사항</string>
+    <string name="main_master">학위논문</string>
+    <string name="main_contest">공모전 수상작</string>
+    <string name="page_title">게시글</string>
+
+
 </resources>

@@ -5,4 +5,4 @@ data class SearchList(
     val Title: String,
     val Text: String,
     val Url: String
-    )
+)

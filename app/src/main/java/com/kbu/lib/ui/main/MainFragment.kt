@@ -1,6 +1,8 @@
 package com.kbu.lib.ui.main
 
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -13,13 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kbu.lib.R
 import com.kbu.lib.base.BaseFragment
-import com.kbu.lib.function.DataManager
+import com.kbu.lib.data.MainViewBookList
 import com.kbu.lib.ui.search.SearchFragment
 import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.Main
-import java.lang.Exception
+
 
 class MainFragment : BaseFragment(R.layout.main_fragment) {
 
@@ -30,18 +32,26 @@ class MainFragment : BaseFragment(R.layout.main_fragment) {
     private val viewModel: MainViewModel by viewModels()
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         newBookList.layoutManager =
             LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         learningBookList.layoutManager =
             LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-
         newBookList.setHasFixedSize(true)
         learningBookList.setHasFixedSize(true)
 
-        listStartUp()
+        val newBookListAdapter =
+            BooksMainRecycler(arrayListOf<MainViewBookList>(), parentFragmentManager)
+        val learningBookListAdapter =
+            BooksMainRecycler(arrayListOf<MainViewBookList>(), parentFragmentManager)
+
+        newBookList.adapter = newBookListAdapter
+        learningBookList.adapter = learningBookListAdapter
+
+
+        listStartUp(newBookListAdapter, learningBookListAdapter)
 
         backGround.setOnClickListener {
             val imm = requireContext().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
@@ -58,6 +68,25 @@ class MainFragment : BaseFragment(R.layout.main_fragment) {
             }
             false
         })
+
+        MMSearch_card.setOnClickListener {
+            fragChangeManager.setDataAtFragment(SearchFragment(), parentFragmentManager,"?rt=MM")
+        }
+        DDSearch_card.setOnClickListener {
+            fragChangeManager.setDataAtFragment(SearchFragment(), parentFragmentManager,"?rt=DD")
+        }
+        FAQ_card.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://lib.bible.ac.kr/Board?n=faq"))
+            startActivity(intent)
+        }
+        notice_card.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://lib.bible.ac.kr/Board?n=notice"))
+            startActivity(intent)
+        }
+        award_card.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://lib.bible.ac.kr/Board?n=award"))
+            startActivity(intent)
+        }
     }
 
     private fun inputAndSearch() {
@@ -70,26 +99,31 @@ class MainFragment : BaseFragment(R.layout.main_fragment) {
                 fragChangeManager.setDataAtFragment(
                     SearchFragment(),
                     parentFragmentManager,
-                    bookSearch.text.toString()
+                    "?q="+bookSearch.text.toString()
                 )
         }
     }
 
-
-    private fun listStartUp() {
+    private fun listStartUp(
+        newBookListAdapter: BooksMainRecycler,
+        learningBookList: BooksMainRecycler
+    ) {
         CoroutineScope(Main).launch {
             try {
                 withContext(Default) {
                     dataManager.newBookList(viewModel)
                     dataManager.learningBookListView(viewModel)
                 }
-                newBookList.adapter = BooksMainRecycler(viewModel.getNewList())
-                learningBookList.adapter = BooksMainRecycler(viewModel.getLearningList())
+                for (i in viewModel.getNewList().indices) {
+                    newBookListAdapter.addItem(viewModel.getNewList()[i])
+                }
+                for (i in viewModel.getLearningList().indices) {
+                    learningBookList.addItem(viewModel.getLearningList()[i])
+                }
+
             } catch (e: Exception) {
                 Log.e("listStartUp", "Error : $e")
             }
         }
     }
-
-
 }
