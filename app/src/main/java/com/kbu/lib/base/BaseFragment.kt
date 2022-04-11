@@ -16,10 +16,13 @@ abstract class BaseFragment(private val LayoutID: Int) : Fragment() {
     val dataParser = DataParser()
     val dataManager = DataManager()
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = inflater.inflate(LayoutID, container, false)
+
+
 
 }

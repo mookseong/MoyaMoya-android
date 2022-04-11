@@ -30,7 +30,8 @@ class MainFragment : BaseFragment(R.layout.main_fragment) {
     }
 
     private val viewModel: MainViewModel by viewModels()
-
+    private lateinit var newBookListAdapter : BooksMainRecycler
+    private lateinit var learningBookListAdapter: BooksMainRecycler
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,16 +43,17 @@ class MainFragment : BaseFragment(R.layout.main_fragment) {
         newBookList.setHasFixedSize(true)
         learningBookList.setHasFixedSize(true)
 
-        val newBookListAdapter =
-            BooksMainRecycler(arrayListOf<MainViewBookList>(), parentFragmentManager)
-        val learningBookListAdapter =
-            BooksMainRecycler(arrayListOf<MainViewBookList>(), parentFragmentManager)
+        if (!::newBookListAdapter.isInitialized) {
+            newBookListAdapter =
+                BooksMainRecycler(arrayListOf<MainViewBookList>(), parentFragmentManager)
+            learningBookListAdapter =
+                BooksMainRecycler(arrayListOf<MainViewBookList>(), parentFragmentManager)
+            listStartUp(newBookListAdapter, learningBookListAdapter)
+        }
 
         newBookList.adapter = newBookListAdapter
         learningBookList.adapter = learningBookListAdapter
 
-
-        listStartUp(newBookListAdapter, learningBookListAdapter)
 
         backGround.setOnClickListener {
             val imm = requireContext().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager

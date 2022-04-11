@@ -1,7 +1,6 @@
 package com.kbu.lib.ui.search
 
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -26,35 +25,25 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
     }
 
     private val viewModel: SearchViewModel by viewModels()
+    private lateinit var searchAdapter: SearchRecycler
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = SearchRecycler(arrayListOf<SearchList>(), parentFragmentManager)
         searchRecycler.addItemDecoration(DividerItemDecoration(view.context, 1))
         searchRecycler.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         searchRecycler.setHasFixedSize(true)
-        try {
-            if (viewModel.getBookTitle() == arguments?.getString("URL").toString()) {
-                searchRecycler.adapter = viewModel.getAdapter()
 
-            } else {
-                makeText(context, "책을 검ㅠ색합니다.", Toast.LENGTH_LONG).show()
-                searchRecycler.adapter = adapter
-                viewModel.setAdapter(adapter)
-                viewModel.oneListCount()
-                viewModel.setBookTitle(arguments?.getString("URL").toString())
-                bookListIndex(adapter)
-
-            }
-            moreBookList(viewModel.getAdapter())
-        } catch (e: Exception) {
-            Log.d("viewModel Error", e.toString())
+        if (!::searchAdapter.isInitialized){
+            makeText(context, "정보를 불러오고 있습니다.", Toast.LENGTH_SHORT).show()
+            searchAdapter =  SearchRecycler(arrayListOf<SearchList>(), parentFragmentManager)
         }
-
+        bookListIndex()
+        searchRecycler.adapter = searchAdapter
+        moreBookList()
     }
 
-    private fun bookListIndex(searchRecycler: SearchRecycler) {
+    private fun bookListIndex() {
         CoroutineScope(Dispatchers.Main).launch {
             var arrayList = arrayListOf<SearchList>()
             try {
@@ -66,37 +55,38 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
             }
             if (1 <= arrayList.size)
                 for (i in arrayList.indices)
-                    searchRecycler.addItem(arrayList[i])
+                    searchAdapter.addItem(arrayList[i])
             else
-                makeText(context, "항목이 없습니다.", Toast.LENGTH_LONG).show()
+                makeText(context, "항목이 없습니다.", Toast.LENGTH_SHORT).show()
         }
 
     }
 
-    private fun moreBookList(searchRecycler: SearchRecycler) {
-        search_scroll.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+    private fun moreBookList() {
+        search_scroll.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
             if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                val listCount: Int = viewModel.getListCount()
-                var arrayListNew = arrayListOf<SearchList>()
-
-                makeText(context, "더 많은 책을 불러오고 있습니다.", Toast.LENGTH_LONG).show()
-                CoroutineScope(Dispatchers.Main).launch {
+                makeText(context, "더 많은 정보를 불러오고 있습니다.", Toast.LENGTH_SHORT).show()
+                CoroutineScope(Dispatchers.Default).launch {
                     try {
-                        withContext(Dispatchers.Default) {
-                            arrayListNew = dataManager.bookListIndex(
-                                arguments?.getString("URL").toString() + "&p=$listCount"
-                            )
+                        val arrayListNew = dataManager.bookListIndex(
+                            arguments?.getString("URL")
+                                .toString() + "&p=" + searchAdapter.listCount
+                        )
+                        withContext(Dispatchers.Main) {
+                            for (i in arrayListNew.indices) {
+                                searchAdapter.addItem(arrayListNew[i])
+                            }
+                            makeText(context, "새로운 정보를 불러왔습니다.", Toast.LENGTH_SHORT).show()
+                            searchAdapter.listCount += 1
                         }
-                        for (i in arrayListNew.indices) {
-                            searchRecycler.addItem(arrayListNew[i])
-                        }
-//                        Log.i(TAG, arrayListNew.toString());
                     } catch (e: Exception) {
                         Log.e("newBookList", "Error : $e")
+                        withContext(Dispatchers.Main) {
+                            makeText(context, "정보에 문제가 생겨 불러오기를 중단했습니다.", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
-                makeText(context, "새로운 책을 불러왔습니다.", Toast.LENGTH_LONG).show()
-                viewModel.setListCount()
+
             }
         })
 

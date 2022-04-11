@@ -1,3 +1,3 @@
 package com.kbu.lib.data
 
-data class PagesList(val Title : String, )
+data class PagesList(val Title: String)

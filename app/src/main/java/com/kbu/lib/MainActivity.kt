@@ -3,12 +3,9 @@ package com.kbu.lib
 
 import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -50,8 +47,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkNetworkService(): Boolean {
-        val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        return activeNetwork?.isConnectedOrConnecting == true
+        val manager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return manager.isDefaultNetworkActive
     }
 }

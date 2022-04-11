@@ -41,6 +41,8 @@ class SearchRecycler(
 ) : RecyclerView.Adapter<SearchViewHolder>() {
     override fun getItemCount(): Int = searchList.size
 
+    var listCount: Int = 2
+
     @SuppressLint("NotifyDataSetChanged")
     fun addItem(SearchList: SearchList) {
         searchList.add(SearchList)

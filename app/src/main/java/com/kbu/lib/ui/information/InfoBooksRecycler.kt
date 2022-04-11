@@ -12,9 +12,9 @@ import kotlinx.android.synthetic.main.info_borrow_cardview.view.*
 
 class InformationViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bindItem(data: Information) {
-        itemView.number.text = data.registration_number
-        itemView.callnumber.text = data.callnumbers
-        itemView.possession.text = data.possession_position
+        itemView.number.text = data.registerNumber
+        itemView.callnumber.text = data.callNumber
+        itemView.possession.text = data.ownPosition
         itemView.rental.text = data.rental
     }
 }

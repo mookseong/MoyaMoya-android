@@ -41,11 +41,11 @@ class InfoBooksFragment : BaseFragment(R.layout.info_books_fragment) {
             info_title_text.text = arguments?.getString("TitleText")
         } else {
             bookTitle(arguments?.getString("URL").toString())
-            info_title_text.text = "(정보를 불러올 수 없습니다)"
+            info_title_text.text = ""
         }
 
 
-        bookInfo(url, infoBooksRecycler)
+        bookInfo(url)
         borrowList(url, infoBooksRecycler)
     }
 
@@ -86,21 +86,21 @@ class InfoBooksFragment : BaseFragment(R.layout.info_books_fragment) {
         }
     }
 
-    private fun bookInfo(url: String, infoBooksRecycler: InfoBooksRecycler) {
-        CoroutineScope(Dispatchers.Main).launch {
-            var arrayList = arrayListOf<String>()
+    private fun bookInfo(url: String) {
+        CoroutineScope(Dispatchers.Default).launch {
+
             val arrayListID = arrayListOf<TextView>(
                 info_call_number,
                 info_publication,
                 info_writer
             )
             try {
-                withContext(Dispatchers.Default) {
-                    arrayList =
-                        dataManager.bookInfo(libURL + url, arrayListOf("발행사항", "청구기호", "기타저자"))
+                val arrayList =  dataManager.bookInfo(libURL + url, arrayListOf("발행사항", "청구기호", "기타저자"))
+                withContext(Dispatchers.Main) {
+                    for (i in arrayListID.indices)
+                        arrayListID[i].text = arrayList[i]
                 }
-                for (i in arrayListID.indices)
-                    arrayListID[i].text = arrayList[i]
+
             } catch (e: Exception) {
                 Log.e("bookInfoUp", "Error : $e")
             }
