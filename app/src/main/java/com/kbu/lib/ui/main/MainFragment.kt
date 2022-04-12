@@ -30,12 +30,23 @@ class MainFragment : BaseFragment(R.layout.main_fragment) {
     }
 
     private val viewModel: MainViewModel by viewModels()
-    private lateinit var newBookListAdapter : BooksMainRecycler
+    private lateinit var newBookListAdapter: BooksMainRecycler
     private lateinit var learningBookListAdapter: BooksMainRecycler
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //데이터가 있는 확인하고 없으면 어뎁터를 초기화를 진행해준다
+        if (!::newBookListAdapter.isInitialized && !::learningBookListAdapter.isInitialized) {
+            newBookListAdapter =
+                BooksMainRecycler(arrayListOf<MainViewBookList>(), parentFragmentManager)
+            learningBookListAdapter =
+                BooksMainRecycler(arrayListOf<MainViewBookList>(), parentFragmentManager)
+            listStartUp()
+        }
 
+        //recyclerview어뎁터 설정
+        newBookList.adapter = newBookListAdapter
+        learningBookList.adapter = learningBookListAdapter
         newBookList.layoutManager =
             LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         learningBookList.layoutManager =
@@ -43,26 +54,17 @@ class MainFragment : BaseFragment(R.layout.main_fragment) {
         newBookList.setHasFixedSize(true)
         learningBookList.setHasFixedSize(true)
 
-        if (!::newBookListAdapter.isInitialized) {
-            newBookListAdapter =
-                BooksMainRecycler(arrayListOf<MainViewBookList>(), parentFragmentManager)
-            learningBookListAdapter =
-                BooksMainRecycler(arrayListOf<MainViewBookList>(), parentFragmentManager)
-            listStartUp(newBookListAdapter, learningBookListAdapter)
-        }
-
-        newBookList.adapter = newBookListAdapter
-        learningBookList.adapter = learningBookListAdapter
-
-
+        //버튼 클릭 이벤트
         backGround.setOnClickListener {
             val imm = requireContext().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(bookSearch.windowToken, 0)
         }
+
+        //검색 버튼 클릭시 검색 이벤트 실행
         searchButton.setOnClickListener {
             inputAndSearch()
         }
-
+        //키보드 엔터 클릭시 검색 이벤트 실행
         bookSearch.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 inputAndSearch()
@@ -71,26 +73,31 @@ class MainFragment : BaseFragment(R.layout.main_fragment) {
             false
         })
 
+        //메뉴 버튼 클릭 이벤트
         MMSearch_card.setOnClickListener {
-            fragChangeManager.setDataAtFragment(SearchFragment(), parentFragmentManager,"?rt=MM")
+            fragChangeManager.setDataFragment(SearchFragment(), parentFragmentManager, "?rt=MM")
         }
         DDSearch_card.setOnClickListener {
-            fragChangeManager.setDataAtFragment(SearchFragment(), parentFragmentManager,"?rt=DD")
+            fragChangeManager.setDataFragment(SearchFragment(), parentFragmentManager, "?rt=DD")
         }
         FAQ_card.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://lib.bible.ac.kr/Board?n=faq"))
+            val intent =
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://lib.bible.ac.kr/Board?n=faq"))
             startActivity(intent)
         }
         notice_card.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://lib.bible.ac.kr/Board?n=notice"))
+            val intent =
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://lib.bible.ac.kr/Board?n=notice"))
             startActivity(intent)
         }
         award_card.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://lib.bible.ac.kr/Board?n=award"))
+            val intent =
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://lib.bible.ac.kr/Board?n=award"))
             startActivity(intent)
         }
     }
 
+    //입력된 값이 있는지 확인하고 있다면 검색 Fragment로 이동
     private fun inputAndSearch() {
         when {
             bookSearch.text.toString().isEmpty() ->
@@ -98,29 +105,29 @@ class MainFragment : BaseFragment(R.layout.main_fragment) {
             bookSearch.text.toString() == " " ->
                 makeText(context, "입력된 값이 없습니다.", LENGTH_LONG).show()
             else ->
-                fragChangeManager.setDataAtFragment(
+                fragChangeManager.setDataFragment(
                     SearchFragment(),
                     parentFragmentManager,
-                    "?q="+bookSearch.text.toString()
+                    "?q=" + bookSearch.text.toString()
                 )
         }
     }
 
-    private fun listStartUp(
-        newBookListAdapter: BooksMainRecycler,
-        learningBookList: BooksMainRecycler
-    ) {
+    //메인화면에 있는 새로 등록된 도서와 대여 도서 정보를 불러와 표시한다.
+    private fun listStartUp() {
         CoroutineScope(Main).launch {
             try {
                 withContext(Default) {
+                    //북리스트를 불러오고 ViewModel에 저장하한다.
                     dataManager.newBookList(viewModel)
                     dataManager.learningBookListView(viewModel)
                 }
+                //데이터 값을 Recyclerview에 넣어준다.
                 for (i in viewModel.getNewList().indices) {
                     newBookListAdapter.addItem(viewModel.getNewList()[i])
                 }
                 for (i in viewModel.getLearningList().indices) {
-                    learningBookList.addItem(viewModel.getLearningList()[i])
+                    learningBookListAdapter.addItem(viewModel.getLearningList()[i])
                 }
 
             } catch (e: Exception) {

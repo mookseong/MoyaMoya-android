@@ -23,9 +23,6 @@ class PagesFragment : BaseFragment(R.layout.pages_fragment){
         fun newInstance() = PagesFragment()
     }
 
-    private val viewModel: PagesViewModel by viewModels()
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = SearchRecycler(arrayListOf<SearchList>(), parentFragmentManager)

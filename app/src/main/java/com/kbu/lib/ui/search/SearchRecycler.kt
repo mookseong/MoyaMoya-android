@@ -13,7 +13,6 @@ import com.kbu.lib.function.FragmentChangeManager
 import com.kbu.lib.ui.information.InfoBooksFragment
 import kotlinx.android.synthetic.main.searchbooks_cardview.view.*
 
-
 class SearchViewHolder(view: View, private val fragmentManager: FragmentManager) :
     RecyclerView.ViewHolder(view) {
     private val fragChangeManager = FragmentChangeManager()
@@ -23,7 +22,7 @@ class SearchViewHolder(view: View, private val fragmentManager: FragmentManager)
         itemView.Search_Title.text = data.Title
         itemView.Search_Text.text = data.Text
         itemView.setOnClickListener {
-            fragChangeManager.setDataAtFragment(
+            fragChangeManager.setDataFragment(
                 InfoBooksFragment(),
                 fragmentManager,
                 data.Url,

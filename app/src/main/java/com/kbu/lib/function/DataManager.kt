@@ -1,16 +1,18 @@
 package com.kbu.lib.function
 
-import android.util.Log
 import com.kbu.lib.data.Information
 import com.kbu.lib.data.SearchList
 import com.kbu.lib.ui.main.MainViewModel
 
+
+//데이터 파씽을 함수로 정리해서 관리
 class DataManager {
 
     private val libURL = "http://lib.bible.ac.kr"
     private val fragChangeManager = FragmentChangeManager()
     private val dataParser = DataParser()
 
+    //책 검색 리스트를 불러온다.
     fun bookListIndex(url: String?): ArrayList<SearchList> {
         val arrayList = arrayListOf<SearchList>()
         val elements =
@@ -34,7 +36,7 @@ class DataManager {
         return arrayList
     }
 
-
+    //도서 정보를 불러온다.
     fun bookInfo(url: String?, bookInfoList: ArrayList<String>): ArrayList<String> {
         val arrayList = arrayListOf<String>()
         val elements =
@@ -53,6 +55,7 @@ class DataManager {
         return arrayList
     }
 
+    //도서 ISBN 정보를 불러온다.
     fun bookISBN(url: String?) : String{
         val elements =
             dataParser.elements(
@@ -69,7 +72,7 @@ class DataManager {
     }
 
 
-
+    //대여관련 정보를 불러온다.
     fun bookBorrow(url: String?): ArrayList<Information> {
         val arrayList = arrayListOf<Information>()
         val borrowElements =
@@ -91,7 +94,7 @@ class DataManager {
         return arrayList
     }
 
-
+    //최근대여 목록을 불러온다
     fun learningBookListView(viewModel: MainViewModel) {
         val elements =
             dataParser.elements(
@@ -111,6 +114,7 @@ class DataManager {
         )
     }
 
+    //신작 도서 목록을 불러온다.
     fun newBookList(viewModel: MainViewModel) {
         val elements =
             dataParser.elements(

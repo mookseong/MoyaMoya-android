@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         val positiveButtonClick = { _: DialogInterface, _: Int -> finish() }
 
+        //SDK버전을 확인하고 메뉴바를 흰색으로 변경한다.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.setSystemBarsAppearance(
                 WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
+        //인터넷 상태를 확인하고 인터넷이 연결되어있지 않다면 확인후 안내를 하고 종료를 유도
         if (!checkNetworkService()) {
             AlertDialog.Builder(this)
                 .setTitle("인터넷이 연결되어있지않습니다.")
@@ -46,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //사용자 핸드폰의 인터넷 상태를 확인한다.
     private fun checkNetworkService(): Boolean {
         val manager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return manager.isDefaultNetworkActive

@@ -9,6 +9,8 @@ import com.kbu.lib.function.DataManager
 import com.kbu.lib.function.DataParser
 import com.kbu.lib.function.FragmentChangeManager
 
+
+//기초 설정 base설정
 abstract class BaseFragment(private val LayoutID: Int) : Fragment() {
 
     val libURL = "http://lib.bible.ac.kr"

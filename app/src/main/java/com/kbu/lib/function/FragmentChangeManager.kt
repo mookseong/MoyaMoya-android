@@ -14,7 +14,7 @@ class FragmentChangeManager {
 
     }
 
-    fun setDataAtFragment(fragment: Fragment, fragmentManager: FragmentManager, title: String) {
+    fun setDataFragment(fragment: Fragment, fragmentManager: FragmentManager, title: String) {
         val bundle = Bundle()
         bundle.putString("URL", title)
         fragment.arguments = bundle
@@ -22,7 +22,7 @@ class FragmentChangeManager {
         setFragment(fragment, fragmentManager)
     }
 
-    fun setDataAtFragment(
+    fun setDataFragment(
         fragment: Fragment,
         fragmentManager: FragmentManager,
         URL: String,
@@ -36,7 +36,7 @@ class FragmentChangeManager {
         setFragment(fragment, fragmentManager)
     }
 
-    fun setDataAtFragment(
+    fun setDataFragment(
         fragment: Fragment,
         fragmentManager: FragmentManager,
         URL: String,
@@ -52,7 +52,7 @@ class FragmentChangeManager {
         setFragment(fragment, fragmentManager)
     }
 
-    fun setDataAtFragment(
+    fun setDataFragment(
         fragment: Fragment,
         fragmentManager: FragmentManager,
         URL: String,
