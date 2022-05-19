@@ -1,13 +1,12 @@
 package com.kbu.lib.function
 
-
-import com.kbu.lib.data.MainViewBookList
+import com.kbu.lib.data.recyclerData.MainViewBookList
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 
 class DataParser {
 
-    //elements를 데이터 양에 따라서 사용 가능하도록 정의
+    //elements 데이터 양에 따라서 사용 가능하도록 정의
     fun elements(URL: String, cssQueue: String, queue_ul: String, queue_li: String): Elements =
         Jsoup.connect(URL).get().select(cssQueue).select(queue_ul).select(queue_li)
 

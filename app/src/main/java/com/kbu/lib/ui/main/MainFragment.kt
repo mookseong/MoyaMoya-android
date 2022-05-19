@@ -3,7 +3,6 @@ package com.kbu.lib.ui.main
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -15,124 +14,85 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kbu.lib.R
 import com.kbu.lib.base.BaseFragment
-import com.kbu.lib.data.MainViewBookList
+import com.kbu.lib.databinding.MainFragmentBinding
+import com.kbu.lib.function.FragmentChangeManager
+import com.kbu.lib.function.MainFunction
 import com.kbu.lib.ui.search.SearchFragment
-import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.Main
 
 
-class MainFragment : BaseFragment(R.layout.main_fragment) {
-
-    companion object {
-        fun newInstance() = MainFragment()
-    }
+class MainFragment : BaseFragment<MainFragmentBinding>(R.layout.main_fragment) {
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var newBookListAdapter: BooksMainRecycler
     private lateinit var learningBookListAdapter: BooksMainRecycler
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        //데이터가 있는 확인하고 없으면 어뎁터를 초기화를 진행해준다
-        if (!::newBookListAdapter.isInitialized && !::learningBookListAdapter.isInitialized) {
-            newBookListAdapter =
-                BooksMainRecycler(arrayListOf<MainViewBookList>(), parentFragmentManager)
-            learningBookListAdapter =
-                BooksMainRecycler(arrayListOf<MainViewBookList>(), parentFragmentManager)
-            listStartUp()
-        }
+    private val mainFunction = MainFunction()
 
-        //recyclerview어뎁터 설정
-        newBookList.adapter = newBookListAdapter
-        learningBookList.adapter = learningBookListAdapter
-        newBookList.layoutManager =
-            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        learningBookList.layoutManager =
-            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        newBookList.setHasFixedSize(true)
-        learningBookList.setHasFixedSize(true)
-
+    override fun initListener() {
+        super.initListener()
         //버튼 클릭 이벤트
-        backGround.setOnClickListener {
+        binding.backGround.setOnClickListener {
             val imm = requireContext().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(bookSearch.windowToken, 0)
+            imm.hideSoftInputFromWindow(binding.bookSearch.windowToken, 0)
         }
 
         //검색 버튼 클릭시 검색 이벤트 실행
-        searchButton.setOnClickListener {
-            inputAndSearch()
+        binding.searchButton.setOnClickListener {
+            mainFunction.inputAndSearch(binding,requireContext(),parentFragmentManager)
         }
+
         //키보드 엔터 클릭시 검색 이벤트 실행
-        bookSearch.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
+        binding.bookSearch.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                inputAndSearch()
+                mainFunction.inputAndSearch(binding,requireContext(),parentFragmentManager)
                 return@OnKeyListener true
             }
             false
         })
 
         //메뉴 버튼 클릭 이벤트
-        MMSearch_card.setOnClickListener {
-            fragChangeManager.setDataFragment(SearchFragment(), parentFragmentManager, "?rt=MM")
+        binding.MMSearchCard.setOnClickListener {
+            FragmentChangeManager(SearchFragment(), parentFragmentManager).setInfoFragment("?rt=MM")
         }
-        DDSearch_card.setOnClickListener {
-            fragChangeManager.setDataFragment(SearchFragment(), parentFragmentManager, "?rt=DD")
+        binding.DDSearchCard.setOnClickListener {
+            FragmentChangeManager(SearchFragment(), parentFragmentManager).setInfoFragment("?rt=DD")
         }
-        FAQ_card.setOnClickListener {
-            val intent =
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://lib.bible.ac.kr/Board?n=faq"))
-            startActivity(intent)
+        binding.FAQCard.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://lib.bible.ac.kr/Board?n=faq")))
         }
-        notice_card.setOnClickListener {
-            val intent =
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://lib.bible.ac.kr/Board?n=notice"))
-            startActivity(intent)
+        binding.noticeCard.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://lib.bible.ac.kr/Board?n=notice")))
         }
-        award_card.setOnClickListener {
-            val intent =
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://lib.bible.ac.kr/Board?n=award"))
-            startActivity(intent)
+        binding.awardCard.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://lib.bible.ac.kr/Board?n=award")))
         }
     }
 
-    //입력된 값이 있는지 확인하고 있다면 검색 Fragment로 이동
-    private fun inputAndSearch() {
-        when {
-            bookSearch.text.toString().isEmpty() ->
-                makeText(context, "입력된 값이 없습니다.", LENGTH_LONG).show()
-            bookSearch.text.toString() == " " ->
-                makeText(context, "입력된 값이 없습니다.", LENGTH_LONG).show()
-            else ->
-                fragChangeManager.setDataFragment(
-                    SearchFragment(),
-                    parentFragmentManager,
-                    "?q=" + bookSearch.text.toString()
-                )
-        }
+    override fun afterViewCreated() {
+        super.afterViewCreated()
+        //Recyclerview 어뎁터 설정
+        binding.newBookList.adapter = newBookListAdapter
+        binding.learningBookList.adapter = learningBookListAdapter
+        binding.newBookList.layoutManager =
+            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        binding.learningBookList.layoutManager =
+            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        binding.newBookList.setHasFixedSize(true)
+        binding.learningBookList.setHasFixedSize(true)
     }
 
-    //메인화면에 있는 새로 등록된 도서와 대여 도서 정보를 불러와 표시한다.
-    private fun listStartUp() {
-        CoroutineScope(Main).launch {
-            try {
-                withContext(Default) {
-                    //북리스트를 불러오고 ViewModel에 저장하한다.
-                    dataManager.newBookList(viewModel)
-                    dataManager.learningBookListView(viewModel)
-                }
-                //데이터 값을 Recyclerview에 넣어준다.
-                for (i in viewModel.getNewList().indices) {
-                    newBookListAdapter.addItem(viewModel.getNewList()[i])
-                }
-                for (i in viewModel.getLearningList().indices) {
-                    learningBookListAdapter.addItem(viewModel.getLearningList()[i])
-                }
-
-            } catch (e: Exception) {
-                Log.e("listStartUp", "Error : $e")
-            }
+    override fun initView() {
+        super.initView()
+        //데이터가 있는 확인하고 없으면 어뎁터를 초기화를 진행해준다
+        if (!::newBookListAdapter.isInitialized && !::learningBookListAdapter.isInitialized) {
+            newBookListAdapter =
+                BooksMainRecycler(arrayListOf(), parentFragmentManager)
+            learningBookListAdapter =
+                BooksMainRecycler(arrayListOf(), parentFragmentManager)
+            mainFunction.listStartUp(viewModel, newBookListAdapter, learningBookListAdapter)
         }
     }
 }

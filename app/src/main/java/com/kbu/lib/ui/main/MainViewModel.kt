@@ -2,8 +2,7 @@ package com.kbu.lib.ui.main
 
 
 import androidx.lifecycle.ViewModel
-import com.kbu.lib.data.MainViewBookList
-import com.kbu.lib.ui.search.SearchRecycler
+import com.kbu.lib.data.recyclerData.MainViewBookList
 
 class MainViewModel : ViewModel() {
     private lateinit var newBookList: ArrayList<MainViewBookList>

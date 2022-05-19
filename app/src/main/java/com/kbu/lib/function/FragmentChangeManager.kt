@@ -5,69 +5,41 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.kbu.lib.R
+import com.kbu.lib.data.recyclerData.MainViewBookList
+import com.kbu.lib.data.recyclerData.SearchList
 
-class FragmentChangeManager {
+class FragmentChangeManager(private val fragment: Fragment, private val fragmentManager: FragmentManager) {
 
-    private fun setFragment(fragment: Fragment, fragmentManager: FragmentManager) {
+    private fun setFragment() {
         fragmentManager.beginTransaction().replace(R.id.container, fragment)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null).commit()
 
     }
 
-    fun setDataFragment(fragment: Fragment, fragmentManager: FragmentManager, title: String) {
+    fun setInfoFragment(title: String) {
         val bundle = Bundle()
         bundle.putString("URL", title)
         fragment.arguments = bundle
-
-        setFragment(fragment, fragmentManager)
+        setFragment()
     }
 
-    fun setDataFragment(
-        fragment: Fragment,
-        fragmentManager: FragmentManager,
-        URL: String,
-        IMG: String
-    ) {
+    fun setInfoFragment( data: MainViewBookList) {
         val bundle = Bundle()
-        bundle.putString("URL", URL)
-        bundle.putString("IMG", IMG)
+        bundle.putString("URL", data.url)
+        bundle.putString("IMG", data.img)
         fragment.arguments = bundle
-
-        setFragment(fragment, fragmentManager)
+        setFragment()
     }
 
-    fun setDataFragment(
-        fragment: Fragment,
-        fragmentManager: FragmentManager,
-        URL: String,
-        IMG: String,
-        TITLE: String
-    ) {
+    fun setInfoFragment( data: SearchList) {
         val bundle = Bundle()
-        bundle.putString("URL", URL)
-        bundle.putString("IMG", IMG)
-        bundle.putString("TITLE", TITLE)
+        bundle.putString("URL", data.url)
+        bundle.putString("IMG", data.img)
+        bundle.putString("TITLE", data.title)
+        bundle.putString("TITLE", data.text)
         fragment.arguments = bundle
 
-        setFragment(fragment, fragmentManager)
-    }
-
-    fun setDataFragment(
-        fragment: Fragment,
-        fragmentManager: FragmentManager,
-        URL: String,
-        IMG: String,
-        TITLE: String,
-        TITLE_TEXT: String
-    ) {
-        val bundle = Bundle()
-        bundle.putString("URL", URL)
-        bundle.putString("IMG", IMG)
-        bundle.putString("Title", TITLE)
-        bundle.putString("TitleText", TITLE_TEXT)
-        fragment.arguments = bundle
-
-        setFragment(fragment, fragmentManager)
+        setFragment()
     }
 
 }

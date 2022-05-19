@@ -3,16 +3,14 @@ package com.kbu.lib.ui.main
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.kbu.lib.R
-import com.kbu.lib.data.MainViewBookList
+import com.kbu.lib.data.recyclerData.MainViewBookList
+import com.kbu.lib.databinding.MainBookCardviewBinding
 import com.kbu.lib.function.FragmentChangeManager
 import com.kbu.lib.ui.information.InfoBooksFragment
-import kotlinx.android.synthetic.main.main_book_cardview.view.*
 
 class BooksMainRecycler(
     private val mainViewBookList: ArrayList<MainViewBookList>,
@@ -33,25 +31,20 @@ class BooksMainRecycler(
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): BookViewHolder =
         BookViewHolder(
-            LayoutInflater.from(p0.context).inflate(R.layout.main_book_cardview, p0, false),
+            MainBookCardviewBinding.inflate(LayoutInflater.from(p0.context), p0, false),
             fragmentManager
         )
 }
 
-class BookViewHolder(view: View, private val fragmentManager: FragmentManager) :
-    RecyclerView.ViewHolder(view) {
-    private val fragChangeManager = FragmentChangeManager()
+class BookViewHolder(
+    private val binding: MainBookCardviewBinding,
+    private val fragmentManager: FragmentManager
+) : RecyclerView.ViewHolder(binding.root) {
 
     fun bindItem(data: MainViewBookList) {
-        Glide.with(itemView.context).load(data.Img).into(itemView.listBookImg)
-
+        Glide.with(itemView.context).load(data.img).into(binding.listBookImg)
         itemView.setOnClickListener {
-            fragChangeManager.setDataFragment(
-                InfoBooksFragment(),
-                fragmentManager,
-                data.URL,
-                data.Img
-            )
+            FragmentChangeManager(InfoBooksFragment(), fragmentManager).setInfoFragment(data)
         }
     }
 }

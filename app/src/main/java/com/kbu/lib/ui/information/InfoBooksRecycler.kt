@@ -2,41 +2,37 @@ package com.kbu.lib.ui.information
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.kbu.lib.R
-import com.kbu.lib.data.Information
-import kotlinx.android.synthetic.main.info_borrow_cardview.view.*
+import com.kbu.lib.data.recyclerData.InfoBook
+import com.kbu.lib.databinding.InfoBooksFragmentBinding
+import com.kbu.lib.databinding.InfoBorrowCardviewBinding
 
 
-class InformationViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    fun bindItem(data: Information) {
-        itemView.number.text = data.registerNumber
-        itemView.callnumber.text = data.callNumber
-        itemView.possession.text = data.ownPosition
-        itemView.rental.text = data.rental
+class InformationViewHolder(private val binding: InfoBorrowCardviewBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+    fun bindItem(data: InfoBook) {
+        binding.infoBook =
+            InfoBook(data.registerNumber, data.callNumber, data.ownPosition, data.rental)
     }
 }
 
-class InfoBooksRecycler(private val information: ArrayList<Information>) :
+class InfoBooksRecycler(private val infoBooks: ArrayList<InfoBook>) :
     RecyclerView.Adapter<InformationViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addItem(Information: Information) {
-        information.add(Information)
+    fun addItem(InfoBook: InfoBook) {
+        infoBooks.add(InfoBook)
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int = information.size
+    override fun getItemCount(): Int = infoBooks.size
 
-    override fun onBindViewHolder(p0: InformationViewHolder, p1: Int) {
-        p0.bindItem(information[p1])
-    }
+    override fun onBindViewHolder(p0: InformationViewHolder, p1: Int) =
+        p0.bindItem(infoBooks[p1])
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): InformationViewHolder =
         InformationViewHolder(
-            LayoutInflater.from(p0.context).inflate(R.layout.info_borrow_cardview, p0, false)
+            InfoBorrowCardviewBinding.inflate(LayoutInflater.from(p0.context), p0, false)
         )
-
 }

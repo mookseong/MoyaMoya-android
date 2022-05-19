@@ -18,6 +18,7 @@
     <string name="main_master">학위논문</string>
     <string name="main_contest">공모전 수상작</string>
     <string name="page_title">게시글</string>
+    <string name="bookInfo">책정보</string>
 
 
 </resources>
