@@ -31,7 +31,7 @@ class InfoBooksFragment : BaseFragment<InfoBooksFragmentBinding>(R.layout.info_b
 
     override fun afterViewCreated() {
         super.afterViewCreated()
-        Glide.with(context).load(arguments?.getString("IMG").toString()).into(binding.infoBookImg)
+        context?.let { Glide.with(it).load(arguments?.getString("IMG").toString()).into(binding.infoBookImg) }
 
         infoFunction.bookInfo(url, binding)
         infoFunction.borrowList(url, infoBooksRecycler)
